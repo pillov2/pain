@@ -10,6 +10,7 @@
 
 - a single arrow creates a key constraint, meaning that they can only have a maximum of one of the relationship
 - a single rounded arrow creates another key constraint, meaning that they must have only one relationship
+    - does not affect the relationship in the other direction
 - a bolded line means that the entity will always have the relationship
 
 ### Weak Entities
