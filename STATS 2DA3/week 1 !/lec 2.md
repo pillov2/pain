@@ -199,6 +199,8 @@ OUTPUT:
 
 - can be of mixed type, numerical, character, or logical (you can mix modes in a data frame)
 - formed using the `data.frame()` function
+    - to select a column in R you can use brackets and specify elements by column number, eg. `DataFrameName[ ]`
+        - can also specify using column names, eg. `DataFrameName[c(colname1, colname2)]`
 - each column can only have one mode, but different columns can have different modes
 - columns usually represent variables
 - most popular data type in *R*
@@ -222,6 +224,52 @@ OUTPUT:
 2         2  34    Type2  Improved
 3         3  28    Type1 Excellent
 4         4  52    Type1      Poor
+```
+
+```R
+# fetch columns 1 and 2 and store in ef
+ef<-patientdata[1:2]
+ef
+
+OUTPUT:
+  patientID age
+1         1  25
+2         2  34
+3         3  28
+4         4  52
+```
+
+```R
+# fetch columns "diabetes" and "status" and store in gh
+gh<-patientdata[c("diabetes", "status")]
+gh
+
+OUTPUT:
+  diabetes    status
+1    Type1      Poor
+2    Type2  Improved
+3    Type1 Excellent
+4    Type1      Poor
+```
+
+```R
+# fetch age data and store in ij
+ij<-patientdata$age
+ij
+
+OUTPUT:
+[1] 25 34 28 52
+```
+
+```R
+# produce a table of "diabetes type" against "status"
+table <-table(patientdata$diabetes, patientdata$status)
+table
+
+OUTPUT:
+        Excellent Improved Poor
+  Type1         1        0    2
+  Type2         0        1    0
 ```
 
 ### Factors
