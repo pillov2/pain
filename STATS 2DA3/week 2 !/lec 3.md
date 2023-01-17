@@ -25,3 +25,9 @@
 - `url()` to access internet files through a URL that includes *http://, ftp://, or file://* 
     - for *http://* and *ftp://* URL's, proxies can be specified
     - complete URLs surrounded by double quotation marks can often be used directly in place of filenames
+
+### Importing Web Data
+
+### Simsom's Paradox
+
+> TODO ADD IMAGE EXAMPLE FROM CLASS
