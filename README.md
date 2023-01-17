@@ -1,3 +1,3 @@
 # Year 2 Sem 2 notes
 
-TESTING
+These are my notes for semester 2 :D
