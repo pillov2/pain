@@ -81,28 +81,28 @@ Packages
 - library() shows you what packages are in your library
 
 Notes
-- c() is a combine functions that combines its arguments into a vector or list
-- cor() is the measure of linear relationship between two variables
-- plot(x,y) creates a basic scatter plot graph with the two variables inputted, where x and y are the axis'
+- `c()` is a combine function that combines its arguments into a vector or list
+- `cor()` is the measure of linear relationship between two variables
+- `plot(x,y)` creates a basic scatter plot graph with the two variables inputted, where x and y are the axis'
     - can use external packages to fancier packages
-- help.start() to access help page with tutorials about R and data imports in R
+- `help.start()` to access help page with tutorials about R and data imports in R
 - to install a package vcd (for visualizing categorical data):
-    - install.packages("vcd")
+    - `install.packages("vcd")`
         - click on ontario mirror, or canadian, or close by??
 - !! must remember to call packages every time you open R
     - updating R will remove all installed packages
-- help(package="vcd")
-- library(vcd) to load the library
-- help(Arthritis) to get documentation on library?
+- `help(package="vcd")`
+- `library(vcd)` to load the library
+- `help(Arthritis)` to get documentation on library?
 - ordered factors have some form of order, regular factors can have any number to represent it
-    - use stratify to check if R is reading the values correctly, to see if it is treating the factor as a factor or as an ordered factor
-- head(Arthritis) to get the first six lines of code that is being pulled from your dataset
-- str(Arthritis) to get type of variables, ex: factors with 2 levels, ordered factors with 3 levels, int
-- xtabs to create a contingency table
-    - cross-classifying variables are separated by +
+    - use stratify `str()` to check if R is reading the values correctly, to see if it is treating the factor as a factor or as an ordered factor
+- `head(Arthritis)` to get the first six lines of code that is being pulled from your dataset
+- `str(Arthritis)` to get type of variables, ex: factors with 2 levels, ordered factors with 3 levels, int
+- `xtabs` to create a contingency table
+    - cross-classifying variables are separated by `+`
     - only looking at female patients
-    - art <- xtabs(~ Treatment + Improved, data = Arthritis, subset = Sex == "Female")
+    - `art <- xtabs(~ Treatment + Improved, data = Arthritis, subset = Sex == "Female")`
         - put into variable so you can call table after compiling
-- ?xtabs can also be used to access function documentation
+- `?xtabs` can also be used to access function documentation
 
 

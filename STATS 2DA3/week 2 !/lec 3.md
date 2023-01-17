@@ -28,6 +28,13 @@
 
 ### Importing Web Data
 
+- extract data from the web by using webscraping or an API (application programming interface)
+    - webscraping involves extracting information from a webpage(s) and storing it in a format suitable for *R* for further analysis
+- `revest` package has functions for simplifying the extraction of data from web pages
+- API's allow access to online data stores and web services
+    - act as a go-between for your programming package and the data source that you are accessing, allowing different software components to interact with each other correctly
+- can access Twitter data through `twitteR`, Facebook data via `Rfacebook` and Flickr via `Rflickr`
+
 ### Simsom's Paradox
 
 > TODO ADD IMAGE EXAMPLE FROM CLASS

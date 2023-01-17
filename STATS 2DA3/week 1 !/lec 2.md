@@ -288,6 +288,39 @@ Variables can be nominal, ordinal, or continuous
 - factor levels for character vectors are crated in alphabetical order by default
     - can change the level order using the levels option
 
+```R
+# enter data as vectors
+patientID <- c(1, 2, 3, 4)
+age <- c(25, 34, 28, 52)
+diabetes <- c("Type1", "Type2", "Type1", "Type1")
+status <- c("Poor", "Improved", "Excellent", "Poor")
+
+# define "diabetes" and "status" as factors
+# status will be an ordered factor
+diabetes <- factor(diabetes)
+status <- factor(status, order=TRUE)
+
+# combine data into a dataframe
+patientdata <- data.frame(patientID, age, diabetes, status) 
+```
+```R
+# use str() to get an overview of the dataset 
+# also used to make sure that variables are being read by R in the correct format
+str(patientdata)
+
+OUTPUT:
+'data.frame':   4 obs. of  4 variables:
+ $ patientID: num  1 2 3 4
+ $ age      : num  25 34 28 52
+ $ diabetes : Factor w/ 2 levels "Type1","Type2": 1 2 1 1
+ $ status   : Ord.factor w/ 3 levels "Excellent"<"Improved"<..: 3 2 1 3
+```
+```R
+# override the alphabetical ordering of levels
+status <- factor(status, order=TRUE,
+levels=c("Poor", "Improved", "Excellent"))
+```
+
 ### Lists
 
 A list is an ordered collection of objects
@@ -297,3 +330,51 @@ A list is an ordered collection of objects
 - can specify elements of a list by indicating a component within double brackets `[[ ]]`
 - in *R*, many functions return lists
     - need to select components of interest to you
+
+```R
+# string
+g <- "My List" 
+
+# numeric vector
+h <- c(25, 26, 18, 39)
+
+# matrix
+j <- matrix(1:10, nrow=5)
+
+# character vector
+k <- c("one", "two", "three")
+
+# create a list
+mylist <- list(title=g, ages=h, j, k) 
+mylist
+
+OUTPUT:
+$title
+[1] "My List"
+
+$ages
+[1] 25 26 18 39
+
+[[3]]
+     [,1] [,2]
+[1,]    1    6
+[2,]    2    7
+[3,]    3    8
+[4,]    4    9
+[5,]    5   10
+
+[[4]]
+[1] "one"   "two"   "three"
+```
+
+```R
+# print the second component, call by number
+mylist[[2]]
+
+# print the second component, call by variable name
+mylist[["ages"]]
+
+OUTPUT:
+[1] 25 26 18 39
+[1] 25 26 18 39
+```
