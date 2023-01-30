@@ -28,6 +28,8 @@ Before all questions were attempted, after the respective packages were download
 \begin{verbatim}
     library(ggplot2)
     library(gridExtra)
+    library(HistData)
+    library(vcd)
 \end{verbatim}
 
 \subsection*{1.a) How many rows and columns are in the dataset?}
@@ -47,8 +49,8 @@ Manufacturer, model, trans, drv, fl, and class are all nominal categorical varia
     + geom_point(color = "green")
 \end{verbatim}
 
-\begin{figure}[h]
-\includegraphics[width = 12cm]{1d.jpg}
+\begin{figure}[H]
+\includegraphics[width = 11cm]{1d.jpg}
 \centering
 \end{figure}
 
@@ -59,7 +61,7 @@ Manufacturer, model, trans, drv, fl, and class are all nominal categorical varia
     y = "Number of Children")
 \end{verbatim}
 
-\begin{figure}[h]
+\begin{figure}[H]
 \includegraphics[width = 11cm]{2a.jpg}
 \centering
 \end{figure}
@@ -71,7 +73,7 @@ Manufacturer, model, trans, drv, fl, and class are all nominal categorical varia
     y = "Number of Parents")
 \end{verbatim}
 
-\begin{figure}[h]
+\begin{figure}[H]
 \includegraphics[width = 11cm]{2b.jpg}
 \centering
 \end{figure}
@@ -89,7 +91,7 @@ Manufacturer, model, trans, drv, fl, and class are all nominal categorical varia
     grid.arrange(a, b)
 \end{verbatim}
 
-\begin{figure}[h]
+\begin{figure}[H]
 \includegraphics[width = 11cm]{2c.jpg}
 \centering
 \end{figure}
@@ -108,8 +110,8 @@ For midsize vehicles, the drive train type that occurred least often is r, which
     doubledecker(Age ~ Class + Sex, data = Titanic)
 \end{verbatim}
 
-\begin{figure}[h]
-\includegraphics[width = 17cm]{4a.jpg}
+\begin{figure}[H]
+\includegraphics[width = 15cm]{4a.jpg}
 \centering
 \end{figure}
 
