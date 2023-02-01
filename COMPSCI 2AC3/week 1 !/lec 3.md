@@ -40,6 +40,7 @@ Length of string:
 Powers of symbols:
 - $a^0 \triangleq \epsilon$ 
 - $a^{n+1} \triangleq a ... a$ where $a ... a$ is n+1
+- $a^* = a^0 \cup a^1 \cup a^2 \cup$
 
 The set of all strings over alphabet $\Sigma$ is denoted by $\Sigma^*$
 - $\Sigma = \{\} = \emptyset, \text{  }\emptyset^* = \{\epsilon\}$
