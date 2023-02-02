@@ -12,7 +12,6 @@ str(Titanic1)
 
 doubledecker(Survived ~ Sex, data = Titanic, gp = gpar(fill = c("grey", "red")))
 
-
 doubledecker(Survived ~ Sex + Class, data = Titanic, gp = gpar(fill = c("grey", "red")))
 
 doubledecker(Survived ~ Sex + Class + Age, data = Titanic, gp = gpar(fill = c("grey", "red")))
