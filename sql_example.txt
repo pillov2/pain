@@ -1,0 +1,241 @@
+--
+-- Instructions
+-- 
+-- Copy this file to the server:
+--     scp sql_example.txt macid@cs2db3.cas.mcmaster.ca:~/sql_example.txt
+--
+-- Login to the server:
+--     ssh macid@cs2db3.cas.mcmaster.ca
+--
+-- After login:
+-- Check whether file is copied correctly:
+--     ls
+-- should list sql_example.txt
+--
+-- Then let DB2 execute the SQL commands in this file:
+--     db2 -tvf sql_example.txt
+-- (the options instruct:
+--   -t: use `;' for statement termination;
+--   -v: give verbose feedback;
+--   -f: read commands from this file).
+--
+
+connect to cs2db3;
+
+
+-- Uncomment the following DROP TABLE statements only
+-- if you want to remove pre-existing tables!
+-- Removes all example tables and all data in these tables!
+-- WARNING: There is no recovery!
+
+-- DROP TABLE user;
+-- DROP TABLE event;
+-- DROP TABLE keyword;
+-- DROP TABLE region;
+-- DROP TABLE review;
+
+-- Create the user table.
+CREATE TABLE user
+(
+    uid  INT NOT NULL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL, -- A limit, but easier to use than CLOB.
+    regdate DATE NOT NULL,
+    postcode CHAR(6) -- Not inspired by any real data.
+);
+
+INSERT INTO user VALUES
+    (0, 'Alicia', '2020-09-13', 'A1L1A0'),
+    (1, 'Celeste', '2020-10-15', 'M5A1A0'),
+    (2, 'Celeste', '2020-11-01', 'L9K1A0'), -- Names are NOT unique.
+    (3, 'Bo', '2020-12-31', 'L9H1A0'),
+    (4, 'Dafni', '2021-01-05', 'P0A1A0'),
+    (5, 'Eva', '2021-02-12', 'P0A1C0'),
+    (6, 'Frieda', '2021-03-29', NULL),
+    (7, 'Gregor', '2021-04-03', 'L8S4L8'),
+    (8, 'Hadewych', '2021-05-23', 'M5B1A0'),
+    (9, 'Io', '2021-06-19', 'Y0A1B0');
+
+
+-- Create the event table.
+CREATE TABLE event
+(
+    eid INT NOT NULL PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    description CLOB NOT NULL,
+    startdate DATE NOT NULL,
+    enddate DATE NOT NULL,
+    organizer INT NOT NULL REFERENCES user(uid),
+    postcode VARCHAR(6)
+);
+
+INSERT INTO event VALUES
+    (0 ,'Flea market', 'Just', '2021-06-11', '2021-06-11', 0 ,'A1L1A0'),
+    (1 ,'Fair', 'Some', '2021-08-10', '2021-08-10', 1 ,'M5B1A0'),
+    (2 ,'New Art Exhibition', 'Example', '2021-01-15', '2021-01-17', 2 ,'V5K1A0'),
+    (3 ,'Film Lovers Festival', 'Text', '2021-09-01', '2021-09-12', 0 ,'A1L1A0'),
+    (4 ,'Old Car Show', 'So', '2020-12-17', '2020-12-17', 1 ,'L8S4L8'),
+    (5 ,'Cooking Workshop', 'That', '2021-02-18', '2021-02-18', 2 ,'A1L1A0'),
+    (6 ,'International Festival', 'All', '2021-07-19', '2021-07-23', 0 ,'A1L1A0'),
+    (7 ,'Open Prison Day', 'Events', '2020-11-20', '2020-11-20', 1 ,'L9K1A0'),
+    (8 ,'Read A Book Week', 'Have', '2021-03-21', '2021-03-27', 2 ,'P0A1A0'),
+    (9 ,'The Long Hike', 'A', '2021-04-29', '2021-04-29', 3 ,'L9H1A0'),
+    (10 ,'Spring Halloween Festival', 'Meaningless', '2020-05-23', '2020-05-26', 0 ,'A1L1A0'),
+    (11 ,'Virtual Analog Day', 'Description', '2021-12-21', '2021-12-21', 1 ,'L9H1A0'),
+    (12 ,'Traveling Circus', 'Text', '2021-06-25', '2021-06-30', 2 ,'Y0A1C0'),
+    (13 ,'Arts & Crafts Sale', 'For', '2021-08-05', '2021-08-05', 0 ,'A1L1A0'),
+    (14 ,'Community BBQ', 'Testing', '2020-07-04', '2020-07-04', 4 ,'J0V1B0'),
+    (15 ,'Super Film Mega Show', 'Usage', '2021-09-01', '2021-09-01', 4 ,'J0V1B0');
+
+
+-- Create the keyword table.
+CREATE TABLE keyword
+(
+    event INT NOT NULL REFERENCES event(eid),
+    word VARCHAR(50) NOT NULL,
+    PRIMARY KEY (event, word)
+);
+
+INSERT INTO keyword VALUES
+    (0, 'Community'),
+    (0, 'Sale'),
+    (1, 'Community'),
+    (1, 'Sale'),
+    (1, 'Snacks'),
+    (2, 'Modern'),
+    (2, 'Art'),
+    (2, 'Museum'),
+    (2, 'Painting'),
+    (3, 'Film'),
+    (3, 'Cinema'),
+    (3, 'Art'),
+    (3, 'Movie'),
+    (3, 'Screening'),
+    (5, 'Cooking'),
+    (5, 'Eating'),
+    (5, 'Dining'),
+    (5, 'Workshop'),
+    (6, 'International'),
+    (6, 'Music'),
+    (6, 'Plays'),
+    (6, 'Food'),
+    (7, 'Prison'),
+    (7, 'Tour'),
+    (8, 'Book'),
+    (8, 'Library'),
+    (8, 'Reading'),
+    (8, 'Literacy'),
+    (9, 'Nature'),
+    (9, 'Walking'),
+    (9, 'Exercise'),
+    (9, 'Hiking'),
+    (10, 'Festival'),
+    (10, 'Costume'),
+    (10, 'Party'),
+    (11, 'Typewriter'),
+    (11, 'Tablet'),
+    (12, 'Circus'),
+    (12, 'Festival'),
+    (12, 'Clown'),
+    (12, 'Plays'),
+    (12, 'Music'),
+    (13, 'Art'),
+    (13, 'Community'),
+    (13, 'Sale'),
+    (13, 'Craft'),
+    (14, 'Community'),
+    (14, 'Food'),
+    (14, 'Snacks'),
+    (14, 'Party'),
+    (15, 'Film'),
+    (15, 'Cinema'),
+    (15, 'Art'),
+    (15, 'Movie'),
+    (15, 'Screening');
+
+
+-- Create the region table.
+CREATE TABLE region
+(
+    postcode CHAR(6) NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    PRIMARY KEY(postcode, name)
+);
+
+INSERT INTO region VALUES
+    ('A1L1A0', 'Paradise'),
+    ('A1L1A0', 'Newfoundland and Labrador'),
+    ('A1L1A0', 'St. John''s Metropolitan Area'),  -- Escaped single-quote.
+    ('M5A1A0', 'Regent Park'),
+    ('M5A1A0', 'Downtown Toronto'),
+    ('M5A1A0', 'Toronto'),
+    ('M5A1A0', 'Ontario'),
+    ('M5A1A0', 'Golden Horseshoe'),
+    ('M5B1A0', 'Garden District'),
+    ('M5B1A0', 'Downtown Toronto'),
+    ('M5B1A0', 'Golden Horseshoe'),
+    ('M5B1A0', 'Toronto'),
+    ('M5B1A0', 'Ontario'),
+    ('P0A1A0', 'Ahmic Harbour'),
+    ('P0A1A0', 'Almaguin Highlands'),
+    ('P0A1A0', 'Ontario'),
+    ('P0A1C0', 'Dorset'),
+    ('P0A1C0', 'Almaguin Highlands'),
+    ('P0A1C0', 'Ontario'),
+    ('L8S4L8', 'McMaster University'),
+    ('L8S4L8', 'Hamilton'),
+    ('L8S4L8', 'Ontario'),
+    ('L8S4L8', 'Golden Horseshoe'),
+    ('L9K1A0', 'Ancaster East'),
+    ('L9K1A0', 'Hamilton'),
+    ('L9K1A0', 'Ontario'),
+    ('L9K1A0', 'Golden Horseshoe'),
+    ('L9H1A0', 'Dundas'),
+    ('L9H1A0', 'Hamilton'),
+    ('L9H1A0', 'Golden Horseshoe'),
+    ('Y0A1B0', 'Teslin'),
+    ('Y0A1B0', 'Southeastern Yukon'),
+    ('Y0A1B0', 'Yukon'),
+    ('Y0A1C0', 'Watson Lake'),
+    ('Y0A1C0', 'Southeastern Yukon'),
+    ('Y0A1C0', 'Yukon'),
+    ('V5K1A0', 'North Hastings-Sunrise'),
+    ('V5K1A0', 'Vancouver'),
+    ('J0V1B0', 'Grenville-sur-la-Rouge'),
+    ('J0V1B0', 'Laurentides-Sud'),
+    ('J0V1B0', 'Quebec');
+
+
+-- Create the review table.
+CREATE TABLE review
+(
+    user INT NOT NULL REFERENCES user(uid),
+    event INT NOT NULL REFERENCES event(eid),
+    description CLOB NOT NULL,
+    score INT NOT NULL,
+    reviewdate DATE NOT NULL,
+    CHECK(0 <= SCORE AND score <= 10),
+    PRIMARY KEY(user, event)
+);
+
+INSERT INTO review VALUES
+    (3, 0, 'Super', 0, '2021-06-13'), 
+    (4, 14, 'Amazing', 1, '2020-07-05'), 
+    (5, 1, 'Great', 10, '2021-08-11'), 
+    (6, 2, 'Random', 3, '2021-01-16'), 
+    (7, 3, 'Words', 4, '2021-09-13'), 
+    (3, 2, 'To', 5, '2021-01-18'), 
+    (5, 4, 'Fill', 6, '2020-12-16'),
+    (6, 5, 'In', 7, '2021-02-20'), 
+    (7, 6, 'The', 8, '2021-08-20'), 
+    (3, 1, 'Description', 0, '2020-11-21'), 
+    (4, 15, 'Field', 10, '2021-09-02'), 
+    (5, 7, 'What', 1, '2020-11-20'), 
+    (6, 8, 'A', 2, '2021-03-21'), 
+    (7, 9, 'Bunch', 3, '2021-04-29'), 
+    (8, 10, 'Of', 4, '2020-04-23'), 
+    (5, 11, 'Reviews', 5, '2021-12-22'), 
+    (6, 12, 'And', 6, '2021-06-29'), 
+    (7, 13, 'Still', 7, '2021-08-05'), 
+    (5, 2, 'A', 10, '2021-08-11'), 
+    (6, 1, 'Few', 10, '2021-08-10'), 
+    (7, 0, 'More', 10, '2021-06-12');
