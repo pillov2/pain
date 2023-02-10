@@ -1,0 +1,6 @@
+RADIO = OFF,
+OFF = (on -> TOP),
+TOP = (off -> OFF | scan -> SCANNING | reset -> TOP),
+SCANNING = (off -> OFF | scan -> BOTTOM |scan -> SCANNING | reset -> TOP | lock -> TUNING),
+TUNING = (scan -> SCANNING | off -> OFF | reset -> TOP), 
+BOTTOM = (end -> BOTTOM | off -> OFF | reset -> TOP).

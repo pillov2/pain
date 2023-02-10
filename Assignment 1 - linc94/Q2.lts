@@ -1,0 +1,18 @@
+P1 = A,
+A = (a -> B | a -> D),
+B = (b -> C | c -> D),
+C = (d -> C | a -> D | b -> A),
+D = (d -> A).
+
+P2 = A,
+A = (b -> C | b -> B),
+B = (b -> E | d -> D),
+C = (c -> B),
+D = (a -> A | b -> E | d -> C),
+E = (c -> C |a -> A).
+
+P3 = A,
+A = (b -> B | a -> D),
+B = (a -> A | a -> C),
+C = (c -> C | b -> B | b -> D),
+D = (a -> C | c -> A).

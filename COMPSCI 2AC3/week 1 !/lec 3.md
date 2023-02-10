@@ -78,7 +78,7 @@ Proper prefix: a prefix that is not the string itself
 > $A \subseteq \Sigma^*, B \subseteq \Sigma^*$  
 > $A$: all strings that start with a, for alphabet $\Sigma = \{a, b\}$
 
-~$A$: completion
+~$A$: complement
 - ~$A$ = $\Sigma^*$ \ $A$ = $\{x \in \Sigma^*, x \notin A\}$
 
 Set Concatenation: $AB = \{xy: x \in A, y \in B\}$  

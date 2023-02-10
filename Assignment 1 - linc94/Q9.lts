@@ -1,0 +1,5 @@
+COMPUTER1 = (idle1 -> (read1 -> COMPUTER1 | write1 -> COMPUTER1)).
+COMPUTER2 = (idle2 -> (read2 -> COMPUTER2 | write2 -> COMPUTER2)).
+MUT = (write1 -> MUT | write2 -> MUT).
+
+|| LOCKED = (COMPUTER1 || MUT || COMPUTER2).

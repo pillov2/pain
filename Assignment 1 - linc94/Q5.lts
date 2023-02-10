@@ -1,0 +1,12 @@
+DRINKS = PAY,
+PAY = (in.coin[5] -> FIVE | in.coin[10] -> TEN | in.coin[25] -> TWENTYFIVE),
+FIVE = (returnFive -> STOP | in.coin[5] -> TEN | in.coin[10] -> FIFTEEN | in.coin[25] -> THIRTY),
+TEN = (returnTen -> STOP | in.coin[5] -> FIFTEEN | in.coin[10] -> TWENTY | in.coin[25] -> THIRTYFIVE),
+FIFTEEN = (returnFifteen -> STOP | sugerola -> STOP | in.coin[5] -> TWENTY | in.coin[10] -> TWENTYFIVE | in.coin[25] -> FOURTY),
+TWENTY = (returnTwenty -> STOP | sugerola -> returnFive -> STOP | sugerolaDiet -> STOP | in.coin[5] -> TWENTYFIVE | in.coin[10] -> THIRTY | in.coin[25] -> FOURTYFIVE),
+TWENTYFIVE =(returnTwentyFive -> STOP | sugerola -> returnTen -> STOP | sugerolaDiet -> returnFive -> STOP | sugerolaSuperDiet -> STOP | in.coin[5] -> THIRTY | in.coin[10] -> THIRTYFIVE | in.coin[25] -> FIFTY),
+THIRTY = (returnThirty -> STOP | overflow -> sugerola -> returnFifteen -> STOP | overflow -> sugerolaDiet -> returnTen -> STOP | overflow -> sugerolaSuperDiet -> returnFive -> STOP),
+THIRTYFIVE = (returnThirtyFive -> STOP | overflow -> sugerola -> returnTwenty -> STOP | overflow -> sugerolaDiet -> returnFifteen -> STOP | overflow -> sugerolaSuperDiet -> returnTen -> STOP),
+FOURTY = (returnFourty -> STOP | overflow -> sugerola -> returnTwentyFive -> STOP | overflow -> sugerolaDiet -> returnTwenty -> STOP | overflow -> sugerolaSuperDiet -> returnFifteen -> STOP),
+FOURTYFIVE = (returnFourtyFive -> STOP | overflow -> sugerola -> returnThirty -> STOP | overflow -> sugerolaDiet -> returnTwentyFive -> STOP | overflow -> sugerolaSuperDiet -> returnTwenty -> STOP),
+FIFTY = (returnFifty -> STOP | overflow -> sugerola -> returnThirtyFive -> STOP | overflow -> sugerolaDiet -> returnThirty -> STOP | overflow -> sugerolaSuperDiet -> returnTwentyFive -> STOP).

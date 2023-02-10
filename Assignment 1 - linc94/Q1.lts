@@ -1,0 +1,6 @@
+HOTEL = (request -> REQUESTED),
+REQUESTED = (available -> CONFIRMED | unavailable -> WAITLIST),
+CONFIRMED = (use -> pay -> leave -> ARCHIVE | cancel -> CANCELLED),
+WAITLIST = (available -> CONFIRMED | cancel -> CANCELLED),
+ARCHIVE = (finished -> STOP),
+CANCELLED = (finished -> STOP).
