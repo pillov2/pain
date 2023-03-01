@@ -1,0 +1,105 @@
+-- PART ONE TABLES (I SLAPPED THEM ALL IN ONE BY ONE SO I'M NOT SURE IF THE SCRIPT ITSELF WILL RUN)
+
+CREATE TABLE member
+(
+    mid INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    email VARCHAR(200) UNIQUE NOT NULL,
+    passhash VARCHAR(200) UNIQUE NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    address VARCHAR(200) NOT NULL
+);
+
+CREATE TABLE person
+(
+    pid INT NOT NULL PRIMARY KEY REFERENCES member(mid)
+);
+
+CREATE TABLE organization
+(
+    oid INT NOT NULL PRIMARY KEY REFERENCES member(mid),
+    main rep INT NOT NULL REFERENCES person(pid),
+    ”type” VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE isRep
+(
+   pid INT NOT NULL REFERENCES person(pid),
+   oid INT NOT NULL REFERENCES organization(oid),
+   PRIMARY KEY(pid, oid)
+);
+
+CREATE TABLE subscription
+(
+    mid INT NOT NULL REFERENCES "MEMBER"(mid),
+    start_year INT NOT NULL,
+    CHECK (start_year > 0),
+    start_month VARCHAR(9) NOT NULL,
+    CHECK (start_month = 'January' OR start_month = 'February' OR start_month = 'March' OR start_month = 'April' OR start_month = 'May' OR start_month = 'June' OR start_month = 'July' OR start_month = 'August' OR start_month = 'September' OR start_month = 'October' OR start_month = 'November' OR start_month = 'December'),
+    PRIMARY KEY(mid, start_year, start_month)
+);
+
+CREATE TABLE prepaid
+(
+    mid INT NOT NULL,
+    start_year INT NOT NULL,
+    start_month VARCHAR(9) NOT NULL,
+    charges VARCHAR(500) NOT NULL,
+    FOREIGN KEY (mid, start_year, start_month) REFERENCES subscription,
+    PRIMARY KEY(mid, start_year, start_month)
+);
+
+CREATE TABLE longterm
+(
+    mid INT NOT NULL,
+    start_year INT NOT NULL,
+    start_month VARCHAR(9) NOT NULL,
+    tier INT NOT NULL,
+    CHECK (tier > 0),
+    FOREIGN KEY (mid, start_year, start_month) REFERENCES subscription,
+    PRIMARY KEY(mid, start_year, start_month)
+);
+
+CREATE TABLE payment
+(
+    mid INT NOT NULL,
+    start_year INT NOT NULL,
+    start_month VARCHAR(9) NOT NULL,
+    term INT NOT NULL,
+    CHECK (term > 0),
+    payment_terms VARCHAR(500) NOT NULL,
+    pay_by INT REFERENCES person(pid),
+    FOREIGN KEY (mid, start_year, start_month) REFERENCES subscription,
+    PRIMARY KEY(mid, start_year, start_month, term)
+);
+
+-- PART TWO TABLES
+
+CREATE TABLE DonorEvent
+(
+    eid INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name CLOB NOT NULL,
+    "DATE" DATE NOT NULL,
+    description CLOB NOT NULL,
+    private BOOLEAN NOT NULL
+);
+
+CREATE TABLE DonorInvite
+(
+    eid INT NOT NULL REFERENCES donorevent(eid),
+    mid INT NOT NULL REFERENCES "MEMBER"(mid),
+    confirmed BOOLEAN NOT NULL,
+    amount INT NOT NULL,
+    CHECK (amount >= 0),
+    referredBy INT REFERENCES "MEMBER"(mid) DEFAULT NULL,
+    CHECK ((referredBy IS NOT NULL AND amount = 0) OR (referredBy IS NULL))
+);
+
+CREATE TABLE donation
+(
+    eid INT NOT NULL REFERENCES donorevent(eid),
+    donater INT NOT NULL REFERENCES "MEMBER"(mid),
+    amount DECIMAL NOT NULL,
+    CHECK (amount >= 0),
+    donate_to INT REFERENCES "MEMBER"(mid),
+    message VARCHAR(500)
+);
