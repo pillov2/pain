@@ -1,0 +1,83 @@
+-- Query 1
+
+SELECT u.*
+FROM USER u
+WHERE u.RNAME IS NOT NULL
+ORDER BY u.RNAME, u.ID
+
+-- Query 2
+
+SELECT DISTINCT f.AID, f2.CATEGORY 
+FROM FMENTION f
+INNER JOIN FCATEGORY f2 ON f.FID = f2.FID 
+
+-- Query 3
+
+WITH b AS (
+	SELECT c.UID AS uid, c.AID AS aid
+	FROM "COMMENT" c
+)
+SELECT u.ID, a.ID
+FROM "USER" u, ARTICLE a
+LEFT JOIN b ON b.uid = u.ID AND b.aid = a.ID
+WHERE b.uid IS NULL AND b.aid IS NULL
+ORDER BY u.ID, a.ID 
+
+-- Query 4
+
+WITH same_cat AS 
+(
+    SELECT f.FID AS fid1, f2.FID AS fid2
+    FROM FMENTION f, FMENTION f2 
+    WHERE f.FID <> f2.FID
+        AND NOT EXISTS (
+            SELECT *
+            FROM FCATEGORY cf
+            WHERE cf.FID = f.FID AND 
+                cf.CATEGORY NOT IN (SELECT cf2.CATEGORY  
+                                       FROM FCATEGORY cf2 
+                                       WHERE cf2.FID = f2.FID)
+        )
+        AND NOT EXISTS (
+            SELECT *
+            FROM FCATEGORY cf2
+            WHERE cf2.FID = f2.FID AND
+                cf2.CATEGORY NOT IN (SELECT cf.CATEGORY
+                                      FROM FCATEGORY cf
+                                      WHERE cf.FID = f.FID)
+        )
+)
+SELECT f3.AID, same_cat.fid2 AS FID
+FROM FMENTION f3 
+JOIN same_cat ON f3.FID = same_cat.fid1
+
+-- Query 5
+
+WITH direct_comment AS 
+(
+	SELECT c.AID AS aid1, COUNT(*) AS tcount
+	FROM "COMMENT" c 
+	WHERE c.ON_ID IS NOT NULL
+	GROUP BY c.AID 
+),
+comment_on AS 
+(
+	SELECT c.AID AS aid2, COUNT(*) AS rcount
+	FROM "COMMENT" c 
+	GROUP BY c.AID
+),
+combined AS 
+(
+	SELECT aid1, rcount, tcount
+	FROM comment_on
+	JOIN direct_comment ON comment_on.aid2 = direct_comment.aid1
+),
+almost_combined AS 
+(
+	SELECT a.AID AS AID, a.TITLE AS TITLE, combined.rcount, combined.tcount
+	FROM ARTICLE a
+	JOIN combined ON combined.aid1 = a.AID
+)
+SELECT u.NAME, almost_combined.*
+FROM "USER" u 
+JOIN almost_combined ON u.ID = almost_combined.AID
